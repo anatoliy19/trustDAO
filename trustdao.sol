@@ -28,9 +28,11 @@ contract TrustDAO {
     function untrust(uint256 spot) {
         if (spot == 0) revert();
         address leader = trustedLeader[msg.sender];
-        if (followers[leader][spot] == msg.sender) followers[leader][spot] = 0x01;
-        followersBalance[leader] -= balanceOf(msg.sender);
-        trustedLeader[msg.sender] = 0x00;
+        if (followers[leader][spot] == msg.sender) {
+            followers[leader][spot] = 0x01;
+            followersBalance[leader] -= balanceOf(msg.sender);
+            trustedLeader[msg.sender] = 0x00;
+        }
     }
 
 // Constant methods
