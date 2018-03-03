@@ -108,13 +108,15 @@ event Approval(address indexed _owner, address indexed _spender, uint256 _value)
         Transfer(_from, _to, _value);
         return true;
     }
-    function balanceOf(address _owner) constant public returns (uint256 balance) {
-        return balances[_owner];
-    }
+    // Unable to approve if has trustedLeader
     function approve(address _spender, uint256 _value) public returns (bool success) {
+        if (trustedLeader[msg.sender] != 0x00) return false;
         allowed[msg.sender][_spender] = _value;
         Approval(msg.sender, _spender, _value);
         return true;
+    }
+    function balanceOf(address _owner) constant public returns (uint256 balance) {
+        return balances[_owner];
     }
     function allowance(address _owner, address _spender)
     constant public returns (uint256 remaining) {
