@@ -1,11 +1,11 @@
 /*
 
 To trust a leader:
-- Call              canTrust(address leader), get spot.
+- Call              trustGetSpot(address leader), get spot.
 - Send transaction  trust(address leader, uint256 spot)
 
 To untrust a leader:
-- Call              canUntrust(address leader), get spot.
+- Call              untrustGetSpot(address leader), get spot.
 - Send transaction  untrust(uint256 spot)
 
 
@@ -46,7 +46,7 @@ contract TrustDAO {
     }
 
     // Returns 0 if already trusted, return spot otherwise
-    function canTrust(address leader) constant public returns (uint256 spot) {
+    function trustGetSpot(address leader) constant public returns (uint256 spot) {
         uint256 i=1;
         while (followers[leader][i] > 0x01) {
             if (followers[leader][i] == msg.sender) return 0;
@@ -56,7 +56,7 @@ contract TrustDAO {
     }
 
     // Returns spot if already untrusted, return 0 otherwise
-    function canUntrust(address leader) constant public returns (uint256 spot) {
+    function untrustGetSpot(address leader) constant public returns (uint256 spot) {
         uint256 i=1;
         while (followers[leader][i] > 0x01) {
             if (followers[leader][i] == msg.sender) return i;
