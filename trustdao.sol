@@ -31,7 +31,10 @@ contract TrustDAO {
 // Constant methods
 
     function trustedBalanceOf(address leader) constant public returns (uint256) {
-        uint256 b = balanceOf(leader);
+        uint256 b;
+        if (trustedLeader[leader] == 0x00) {
+          b = balanceOf(leader);
+        } else b = 0;
         uint256 i=1;
         while (followers[leader][i] != 0x00) {
             b += balanceOf(followers[leader][i]);
